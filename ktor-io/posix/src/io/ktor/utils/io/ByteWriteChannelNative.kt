@@ -56,6 +56,7 @@ public actual interface ByteWriteChannel {
      *
      * @return number of consumed bytes or -1 if the block wasn't executed.
      */
+    @Suppress("DEPRECATION")
     public fun writeAvailable(min: Int, block: (Buffer) -> Unit): Int
 
     /**
@@ -66,6 +67,7 @@ public actual interface ByteWriteChannel {
     /**
      * Writes as much as possible and only suspends if buffer is full
      */
+    @Suppress("DEPRECATION")
     public actual suspend fun writeAvailable(src: ChunkBuffer): Int
 
     /**
@@ -175,6 +177,7 @@ public actual interface ByteWriteChannel {
      */
     public actual fun flush()
 
+    @Suppress("DEPRECATION")
     public actual suspend fun writeFully(src: Buffer)
 
     public actual suspend fun writeFully(memory: Memory, startIndex: Int, endIndex: Int)

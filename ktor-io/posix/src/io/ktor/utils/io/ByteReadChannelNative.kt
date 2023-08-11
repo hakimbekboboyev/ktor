@@ -3,7 +3,6 @@ package io.ktor.utils.io
 
 import io.ktor.utils.io.bits.*
 import io.ktor.utils.io.core.*
-import io.ktor.utils.io.core.ChunkBuffer
 import io.ktor.utils.io.core.internal.*
 import kotlinx.cinterop.*
 
@@ -57,6 +56,7 @@ public actual interface ByteReadChannel {
      *
      * @return number of consumed bytes or -1 if the block wasn't executed.
      */
+    @Suppress("DEPRECATION")
     public fun readAvailable(min: Int, block: (Buffer) -> Unit): Int
 
     /**
@@ -69,6 +69,7 @@ public actual interface ByteReadChannel {
      * Reads all available bytes to [dst] buffer and returns immediately or suspends if no bytes available
      * @return number of bytes were read or `-1` if the channel has been closed
      */
+    @Suppress("DEPRECATION")
     public actual suspend fun readAvailable(dst: ChunkBuffer): Int
 
     /**
@@ -95,6 +96,7 @@ public actual interface ByteReadChannel {
      * Reads all [length] bytes to [dst] buffer or fails if channel has been closed.
      * Suspends if not enough bytes available.
      */
+    @Suppress("DEPRECATION")
     public actual suspend fun readFully(dst: ChunkBuffer, n: Int)
 
     /**
@@ -255,6 +257,7 @@ public actual interface ByteReadChannel {
         /**
          * Empty closed [ByteReadChannel].
          */
+        @Suppress("DEPRECATION")
         public actual val Empty: ByteReadChannel = ByteChannelNative(
             ChunkBuffer.Empty,
             false,

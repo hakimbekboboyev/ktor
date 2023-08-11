@@ -54,7 +54,10 @@ internal class CurlRequestData @OptIn(ExperimentalForeignApi::class) constructor
 
 internal class CurlResponseBuilder(val request: CurlRequestData) {
     val headersBytes = BytePacketBuilder()
-    val bodyChannel = ByteChannel(true).apply { attachJob(request.executionContext) }
+    val bodyChannel = ByteChannel(true).apply {
+        @Suppress("DEPRECATION")
+        attachJob(request.executionContext)
+    }
 }
 
 internal sealed class CurlResponseData

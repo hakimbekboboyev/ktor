@@ -1,10 +1,11 @@
-@file:Suppress("NOTHING_TO_INLINE", "IntroduceWhenSubject")
+@file:Suppress("IntroduceWhenSubject")
 
 package io.ktor.utils.io.bits
 
 import io.ktor.utils.io.core.internal.*
 import kotlinx.cinterop.*
 import platform.posix.*
+import kotlin.experimental.*
 
 /**
  * Memory instance with 0 size.
@@ -25,8 +26,7 @@ public actual abstract class Memory internal constructor() {
     public abstract val size: Long
 }
 
-@ExperimentalForeignApi
-private class MemoryImpl(
+private class MemoryImpl @OptIn(ExperimentalForeignApi::class) constructor(
     override val pointer: CPointer<ByteVar>,
     override val size: Long
 ) : Memory() {
@@ -211,6 +211,7 @@ public actual fun Memory.copyTo(
     }
 }
 
+@OptIn(ExperimentalNativeApi::class)
 @PublishedApi
 internal inline fun Memory.assertIndex(offset: Int, valueSize: Int): Int {
     assert(offset in 0..size - valueSize) {
@@ -219,6 +220,7 @@ internal inline fun Memory.assertIndex(offset: Int, valueSize: Int): Int {
     return offset
 }
 
+@OptIn(ExperimentalNativeApi::class)
 @PublishedApi
 internal inline fun Memory.assertIndex(offset: Long, valueSize: Long): Long {
     assert(offset in 0..size - valueSize) {
@@ -227,6 +229,7 @@ internal inline fun Memory.assertIndex(offset: Long, valueSize: Long): Long {
     return offset
 }
 
+@OptIn(ExperimentalNativeApi::class)
 @PublishedApi
 internal inline fun Short.toBigEndian(): Short {
     return when {
@@ -235,24 +238,28 @@ internal inline fun Short.toBigEndian(): Short {
     }
 }
 
+@OptIn(ExperimentalNativeApi::class)
 @PublishedApi
 internal inline fun Int.toBigEndian(): Int = when {
     !Platform.isLittleEndian -> this
     else -> reverseByteOrder()
 }
 
+@OptIn(ExperimentalNativeApi::class)
 @PublishedApi
 internal inline fun Long.toBigEndian(): Long = when {
     !Platform.isLittleEndian -> this
     else -> reverseByteOrder()
 }
 
+@OptIn(ExperimentalNativeApi::class)
 @PublishedApi
 internal inline fun Float.toBigEndian(): Float = when {
     !Platform.isLittleEndian -> this
     else -> reverseByteOrder()
 }
 
+@OptIn(ExperimentalNativeApi::class)
 @PublishedApi
 internal inline fun Double.toBigEndian(): Double = when {
     !Platform.isLittleEndian -> this
